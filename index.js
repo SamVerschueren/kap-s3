@@ -49,16 +49,19 @@ const s3 = {
 		accessKeyId: {
 			title: 'Access Key',
 			type: 'string',
+			default: '',
 			required: true
 		},
 		secretAccessKey: {
 			title: 'Secret Access Key',
 			type: 'string',
+			default: '',
 			required: true
 		},
 		path: {
 			title: 'S3 Path',
 			type: 'string',
+			default: '',
 			required: true
 		}
 	}
