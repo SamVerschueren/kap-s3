@@ -1,0 +1,35 @@
+{
+  "name": "kap-s3",
+  "version": "0.0.0",
+  "description": "Kap plugin - Share on Amazon S3",
+  "license": "MIT",
+  "repository": "SamVerschueren/kap-s3",
+  "author": {
+    "name": "Sam Verschueren",
+    "email": "sam.verschueren@gmail.com",
+    "url": "github.com/SamVerschueren"
+  },
+  "engines": {
+    "node": ">=4"
+  },
+  "scripts": {
+    "test": "xo"
+  },
+  "files": [
+    "index.js"
+  ],
+  "keywords": [
+    "kap-plugin",
+    "amazon",
+    "aws",
+    "s3",
+    "upload",
+    "share"
+  ],
+  "dependencies": {
+    "aws-sdk": "^2.58.0"
+  },
+  "devDependencies": {
+    "xo": "*"
+  }
+}
