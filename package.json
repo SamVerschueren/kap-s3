@@ -1,7 +1,7 @@
 {
   "name": "kap-s3",
   "version": "0.1.0",
-  "description": "Kap plugin - Share on Amazon S3",
+  "description": "Share on Amazon S3",
   "license": "MIT",
   "repository": "SamVerschueren/kap-s3",
   "author": {
