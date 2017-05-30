@@ -9,11 +9,8 @@
     "email": "sam.verschueren@gmail.com",
     "url": "github.com/SamVerschueren"
   },
-  "engines": {
-    "node": ">=4"
-  },
   "scripts": {
-    "test": "xo"
+    "test": "xo && ava"
   },
   "files": [
     "index.js"
@@ -30,6 +27,9 @@
     "aws-sdk": "^2.58.0"
   },
   "devDependencies": {
+    "ava": "*",
+    "kap-plugin-test": "^0.4.0",
+    "sinon": "^2.3.2",
     "xo": "*"
   }
 }

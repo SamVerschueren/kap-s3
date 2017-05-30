@@ -1,4 +1,4 @@
-# kap-s3
+# kap-s3 [![Build Status](https://travis-ci.org/SamVerschueren/kap-s3.svg?branch=master)](https://travis-ci.org/SamVerschueren/kap-s3)
 
 > [Kap](https://github.com/wulkano/kap) plugin - Share on Amazon S3
 
