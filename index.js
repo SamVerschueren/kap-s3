@@ -17,11 +17,29 @@ const action = async context => {
 	const split = context.config.get('path').split('/');
 	const bucket = split.shift();
 	const filename = path.basename(filePath);
-
+	const extension = path.extname(filename);
+	const contentType = 'application/octet-stream';
+	
+	switch (extension) {
+		case '.gif':
+			contentType = 'image/gif';
+			break;
+		case '.mp4':
+			contentType = 'video/mp4';
+			break;
+		case '.webm':
+			contentType = 'video/webm';
+			break;
+		case '.apng':
+			contentType = 'image/apng';
+			break;
+	}	
+	
 	const upload = s3.upload({
 		Bucket: bucket,
 		Key: path.join(split.join('/'), filename),
-		Body: fs.createReadStream(filePath)
+		Body: fs.createReadStream(filePath),
+		ContentType: contentType
 	});
 
 	upload.on('httpUploadProgress', progress => {
