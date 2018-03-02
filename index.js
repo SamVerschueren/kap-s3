@@ -20,7 +20,7 @@ const action = async context => {
 	const extension = path.extname(filename);
 	let contentType = 'application/octet-stream';
 
-	switch (extension){
+	switch (extension) {
 		case '.gif':
 			contentType = 'image/gif';
 			break;
