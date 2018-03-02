@@ -19,8 +19,8 @@ const action = async context => {
 	const filename = path.basename(filePath);
 	const extension = path.extname(filename);
 	let contentType = 'application/octet-stream';
-	
-	switch (extension) {
+
+	switch(extension) {
 		case '.gif':
 			contentType = 'image/gif';
 			break;
@@ -32,6 +32,9 @@ const action = async context => {
 			break;
 		case '.apng':
 			contentType = 'image/apng';
+			break;
+		default:
+			contentType = 'application/octet-stream';
 			break;
 	}
 	
