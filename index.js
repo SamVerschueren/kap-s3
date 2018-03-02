@@ -18,7 +18,7 @@ const action = async context => {
 	const bucket = split.shift();
 	const filename = path.basename(filePath);
 	const extension = path.extname(filename);
-	const contentType = 'application/octet-stream';
+	let contentType = 'application/octet-stream';
 	
 	switch (extension) {
 		case '.gif':
