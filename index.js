@@ -20,7 +20,7 @@ const action = async context => {
 	const extension = path.extname(filename);
 	let contentType = 'application/octet-stream';
 
-	switch(extension) {
+	switch (extension){
 		case '.gif':
 			contentType = 'image/gif';
 			break;
@@ -37,7 +37,7 @@ const action = async context => {
 			contentType = 'application/octet-stream';
 			break;
 	}
-	
+
 	const upload = s3.upload({
 		Bucket: bucket,
 		Key: path.join(split.join('/'), filename),
