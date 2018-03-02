@@ -33,7 +33,7 @@ const action = async context => {
 		case '.apng':
 			contentType = 'image/apng';
 			break;
-	}	
+	}
 	
 	const upload = s3.upload({
 		Bucket: bucket,
