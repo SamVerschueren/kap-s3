@@ -56,7 +56,6 @@ const action = async context => {
 	let uploadURL = response.Location;
 
 	const baseURL = context.config.get('baseURL');
-	console.log('baseURL' + baseURL);
 	if (baseURL) {
 		uploadURL = url.resolve(baseURL, objectKey);
 	}
