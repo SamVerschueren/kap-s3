@@ -10,7 +10,7 @@
     "url": "github.com/SamVerschueren"
   },
   "scripts": {
-    "test": "xo && ava"
+    "test": "npx xo && npx ava"
   },
   "files": [
     "index.js"

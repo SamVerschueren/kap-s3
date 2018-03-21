@@ -21,24 +21,14 @@ const action = async context => {
 	const extension = path.extname(filename);
 	const objectKey = path.join(split.join('/'), filename);
 
-	let contentType = 'application/octet-stream';
-	switch (extension) {
-		case '.gif':
-			contentType = 'image/gif';
-			break;
-		case '.mp4':
-			contentType = 'video/mp4';
-			break;
-		case '.webm':
-			contentType = 'video/webm';
-			break;
-		case '.apng':
-			contentType = 'image/apng';
-			break;
-		default:
-			contentType = 'application/octet-stream';
-			break;
-	}
+	const contentTypes = new Map([
+		['.gif', 'image/gif'],
+		['.mp4', 'video/mp4'],
+		['.webm', 'video/webm'],
+		['.apng', 'image/apng']
+	]);
+
+	const contentType = contentTypes.get(extension) || 'application/octet-stream';
 
 	const upload = s3.upload({
 		Bucket: bucket,
