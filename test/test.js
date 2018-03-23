@@ -22,6 +22,7 @@ test('s3 upload parameters are correct', async t => {
 
 	t.is(s3UploadParams.Bucket, 'bucket');
 	t.is(s3UploadParams.Key, 'folder/unicorn.gif');
+	t.is(s3UploadParams.ContentType, 'image/gif');
 });
 
 test('copies url to clipboard', async t => {
