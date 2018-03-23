@@ -3,6 +3,13 @@ const fs = require('fs');
 const path = require('path');
 const AWS = require('aws-sdk');
 
+const contentTypes = new Map([
+	['.gif', 'image/gif'],
+	['.mp4', 'video/mp4'],
+	['.webm', 'video/webm'],
+	['.apng', 'image/apng']
+]);
+
 const action = async context => {
 	const filePath = await context.filePath();
 
@@ -17,11 +24,14 @@ const action = async context => {
 	const split = context.config.get('path').split('/');
 	const bucket = split.shift();
 	const filename = path.basename(filePath);
+	const extension = path.extname(filename);
+	const contentType = contentTypes.get(extension) || 'application/octet-stream';
 
 	const upload = s3.upload({
 		Bucket: bucket,
 		Key: path.join(split.join('/'), filename),
-		Body: fs.createReadStream(filePath)
+		Body: fs.createReadStream(filePath),
+		ContentType: contentType
 	});
 
 	upload.on('httpUploadProgress', progress => {
