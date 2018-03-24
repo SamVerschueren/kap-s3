@@ -32,3 +32,13 @@ test('copies url to clipboard', async t => {
 
 	t.true(plugin.context.copyToClipboard.calledWith('https://s3-eu-west-1.amazonaws.com/bucket/folder/unicorn.gif'));
 });
+
+test('uses baseURL config correctly', async t => {
+	const testConfig = {config};
+	testConfig.config.baseURL = 'https://mydomain.com/';
+	const plugin = pluginTest(file, testConfig);
+
+	await plugin.run();
+
+	t.true(plugin.context.copyToClipboard.calledWith('https://mydomain.com/folder/unicorn.gif'));
+});

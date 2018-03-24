@@ -1,6 +1,7 @@
 'use strict';
 const fs = require('fs');
 const path = require('path');
+const url = require('url');
 const AWS = require('aws-sdk');
 
 const contentTypes = new Map([
@@ -24,6 +25,7 @@ const action = async context => {
 	const split = context.config.get('path').split('/');
 	const bucket = split.shift();
 	const filename = path.basename(filePath);
+	const objectKey = path.join(split.join('/'), filename);
 	const extension = path.extname(filename);
 	const contentType = contentTypes.get(extension) || 'application/octet-stream';
 
@@ -40,8 +42,14 @@ const action = async context => {
 	});
 
 	const response = await upload.promise();
+	let uploadURL = response.Location;
 
-	context.copyToClipboard(response.Location);
+	const baseURL = context.config.get('baseURL');
+	if (baseURL) {
+		uploadURL = url.resolve(baseURL, objectKey);
+	}
+
+	context.copyToClipboard(uploadURL);
 	context.notify('S3 URL copied to the clipboard');
 };
 
@@ -73,6 +81,11 @@ const s3 = {
 			type: 'string',
 			default: '',
 			required: true
+		},
+		baseURL: {
+			title: 'Base URL',
+			type: 'string',
+			require: false
 		}
 	}
 };
