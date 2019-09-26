@@ -1,7 +1,7 @@
 'use strict';
 const fs = require('fs');
 const path = require('path');
-const url = require('url');
+const {URL} = require('url');
 const AWS = require('aws-sdk');
 
 const contentTypes = new Map([
@@ -48,7 +48,7 @@ const action = async context => {
 
 	const baseURL = context.config.get('baseURL');
 	if (baseURL) {
-		uploadURL = url.resolve(baseURL, objectKey);
+		uploadURL = new URL(objectKey, baseURL).href;
 	}
 
 	context.copyToClipboard(uploadURL);
@@ -92,13 +92,13 @@ const s3 = {
 			title: 'Access Control List (ACL)',
 			type: 'string',
 			enum: [
-				"private",
-				"public-read",
-				"public-read-write",
-				"authenticated-read",
-				"aws-exec-read",
-				"bucket-owner-read",
-				"bucket-owner-full-control"
+				'private',
+				'public-read',
+				'public-read-write',
+				'authenticated-read',
+				'aws-exec-read',
+				'bucket-owner-read',
+				'bucket-owner-full-control'
 			]
 		}
 	}

@@ -8,7 +8,8 @@ const config = {
 	region: 'eu-west-1',
 	accessKeyId: 'foo',
 	secretAccessKey: 'bar',
-	path: 'bucket/folder'
+	path: 'bucket/folder',
+	acl: 'public-read'
 };
 
 sinon.spy(s3, 'upload');
@@ -23,6 +24,7 @@ test('s3 upload parameters are correct', async t => {
 	t.is(s3UploadParams.Bucket, 'bucket');
 	t.is(s3UploadParams.Key, 'folder/unicorn.gif');
 	t.is(s3UploadParams.ContentType, 'image/gif');
+	t.is(s3UploadParams.ACL, 'public-read');
 });
 
 test('copies url to clipboard', async t => {

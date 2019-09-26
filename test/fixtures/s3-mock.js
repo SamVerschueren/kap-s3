@@ -4,13 +4,13 @@ const AWS = require('aws-sdk');
 class S3 {
 	upload(params) {
 		return {
-			on: (event, cb) => { },
+			on: () => { },
 			promise: () => Promise.resolve({
 				Location: `https://s3-${this._options.region}.amazonaws.com/${params.Bucket}/${params.Key}`
 			})
-		}
+		};
 	}
-};
+}
 
 const s3 = new S3();
 
