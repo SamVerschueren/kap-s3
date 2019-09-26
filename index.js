@@ -28,12 +28,14 @@ const action = async context => {
 	const objectKey = path.join(split.join('/'), filename);
 	const extension = path.extname(filename);
 	const contentType = contentTypes.get(extension) || 'application/octet-stream';
+	const acl = context.config.get('acl');
 
 	const upload = s3.upload({
 		Bucket: bucket,
 		Key: path.join(split.join('/'), filename),
 		Body: fs.createReadStream(filePath),
-		ContentType: contentType
+		ContentType: contentType,
+		ACL: acl
 	});
 
 	upload.on('httpUploadProgress', progress => {
@@ -84,8 +86,20 @@ const s3 = {
 		},
 		baseURL: {
 			title: 'Base URL',
+			type: 'string'
+		},
+		acl: {
+			title: 'Access Control List (ACL)',
 			type: 'string',
-			require: false
+			enum: [
+				"private",
+				"public-read",
+				"public-read-write",
+				"authenticated-read",
+				"aws-exec-read",
+				"bucket-owner-read",
+				"bucket-owner-full-control"
+			]
 		}
 	}
 };
