@@ -1,7 +1,7 @@
 'use strict';
 const fs = require('fs');
 const path = require('path');
-const url = require('url');
+const {URL} = require('url');
 const AWS = require('aws-sdk');
 
 const contentTypes = new Map([
@@ -28,12 +28,14 @@ const action = async context => {
 	const objectKey = path.join(split.join('/'), filename);
 	const extension = path.extname(filename);
 	const contentType = contentTypes.get(extension) || 'application/octet-stream';
+	const acl = context.config.get('acl');
 
 	const upload = s3.upload({
 		Bucket: bucket,
 		Key: path.join(split.join('/'), filename),
 		Body: fs.createReadStream(filePath),
-		ContentType: contentType
+		ContentType: contentType,
+		ACL: acl
 	});
 
 	upload.on('httpUploadProgress', progress => {
@@ -46,7 +48,7 @@ const action = async context => {
 
 	const baseURL = context.config.get('baseURL');
 	if (baseURL) {
-		uploadURL = url.resolve(baseURL, objectKey);
+		uploadURL = new URL(objectKey, baseURL).href;
 	}
 
 	context.copyToClipboard(uploadURL);
@@ -84,8 +86,20 @@ const s3 = {
 		},
 		baseURL: {
 			title: 'Base URL',
+			type: 'string'
+		},
+		acl: {
+			title: 'Access Control List (ACL)',
 			type: 'string',
-			require: false
+			enum: [
+				'private',
+				'public-read',
+				'public-read-write',
+				'authenticated-read',
+				'aws-exec-read',
+				'bucket-owner-read',
+				'bucket-owner-full-control'
+			]
 		}
 	}
 };
