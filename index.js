@@ -16,10 +16,14 @@ const action = async context => {
 
 	context.setProgress('Uploading…');
 
+	const custom_endpoint = new AWS.Endpoint(context.config.get('endpoint'))
+
 	const s3 = new AWS.S3({
 		region: context.config.get('region'),
 		accessKeyId: context.config.get('accessKeyId'),
-		secretAccessKey: context.config.get('secretAccessKey')
+		secretAccessKey: context.config.get('secretAccessKey'),
+		endpoint: custom_endpoint,
+		s3ForcePathStyle: context.config.get('pathStyle')
 	});
 
 	const split = context.config.get('path').split('/');
@@ -81,6 +85,18 @@ const s3 = {
 			type: 'string',
 			default: '',
 			required: true
+		},
+		endpoint: {
+			title: 'S3 Endpoint',
+			type: 'string',
+			default: '',
+			required: false
+		},
+		pathStyle: {
+			title: 'Use path style URLs',
+			type: 'boolean',
+			default: 'false',
+			required: false
 		},
 		baseURL: {
 			title: 'Base URL',
