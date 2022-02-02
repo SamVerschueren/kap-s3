@@ -16,13 +16,13 @@ const action = async context => {
 
 	context.setProgress('Uploading…');
 
-	const customEndpoint = new AWS.Endpoint(context.config.get('endpoint'))
+	const customEndpoint = new AWS.Endpoint(context.config.get('endpoint'));
 
 	const s3 = new AWS.S3({
 		region: context.config.get('region'),
 		accessKeyId: context.config.get('accessKeyId'),
 		secretAccessKey: context.config.get('secretAccessKey'),
-		...(customEndpoint != '' ? {endpoint: customEndpoint} : {}),
+		...(customEndpoint !== '' ? {endpoint: customEndpoint} : {}),
 		s3ForcePathStyle: context.config.get('pathStyle')
 	});
 
@@ -51,13 +51,13 @@ const action = async context => {
 	const baseURL = context.config.get('baseURL');
 	if (baseURL) {
 		if (context.config.get('pathStyle')) {
-			uploadURL = url.resolve(baseURL, bucket, objectKey);
+			uploadURL = url.resolve(baseURL, bucket + "/" + objectKey);
 		} else {
 			uploadURL = url.resolve(baseURL, objectKey);
 		}
 
 	}
-
+ 
 	context.copyToClipboard(uploadURL);
 	context.notify('S3 URL copied to the clipboard');
 };
